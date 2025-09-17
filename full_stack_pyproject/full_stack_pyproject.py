@@ -9,6 +9,14 @@ class State(rx.State):
     """The app state."""
     label = "Hey Dude! This is my Website."
 
+    def handle_title_input_change(self, value):
+        """Handle the input change."""
+        self.label = value
+
+    def did_click(self):
+        """Handle the button click."""
+        print("Button clicked!")
+
 def index() -> rx.Component:
     # Welcome Page (Index)
     return rx.container(
@@ -19,6 +27,11 @@ def index() -> rx.Component:
                 "Get started by editing ",
                 rx.code(f"{config.app_name}/{config.app_name}.py"),
                 size="5",
+            ),
+            rx.input(
+                default_value=State.label,
+                on_click=State.did_click,
+                on_change=State.handle_title_input_change
             ),
             rx.link(
                 rx.button("Check out our docs!"),
